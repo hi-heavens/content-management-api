@@ -5,9 +5,6 @@ import { signUpDto } from './dto/signup-dto';
 import { User } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
 
-const saltOrRounds = 12;
-const password = 'random_password';
-
 @Injectable()
 export class UserService {
   createSignUpDto: any;
@@ -18,7 +15,6 @@ export class UserService {
 
   async createUser(createSignUpDto: signUpDto) {
     const hashPassword = await this.getHashedPassword(createSignUpDto.password);
-    console.log(hashPassword);
     createSignUpDto.password = hashPassword;
     return this.userRepository.save(createSignUpDto);
   }
