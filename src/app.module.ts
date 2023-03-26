@@ -18,7 +18,7 @@ import { User } from './user/entity/user.entity';
       port: 3306,
       username: 'root',
       password: 'Urpapa@12',
-      database: 'nestjs',
+      database: 'contentmanagement',
       entities: [User],
       synchronize: true,
     }),
