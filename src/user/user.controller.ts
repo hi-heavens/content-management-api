@@ -10,4 +10,9 @@ export class UserController {
   signup(@Body() createSignUpDto: signUpDto) {
     return this.userService.createUser(createSignUpDto);
   }
+
+  @Get('users')
+  getUsers() {
+    return this.userService.getUsers();
+  }
 }
