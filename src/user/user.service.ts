@@ -12,7 +12,7 @@ export class UserService {
   ) {}
 
   createUser(createSignUpDto: signUpDto) {
-    return createSignUpDto;
+    return this.userRepository.save(createSignUpDto);
   }
 
   getUsers(): Promise<User[]> {
