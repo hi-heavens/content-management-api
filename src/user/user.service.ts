@@ -29,23 +29,26 @@ export class UserService {
     };
   }
 
-  loginUser(createSignUpDto: loginDto) {
-    return createSignUpDto;
-    /**
-    const user = this.userRepository.findOne({
-      where: { email: createSignUpDto.email },
+  async loginUser(createSignUpDto: loginDto) {
+    const email = createSignUpDto.email;
+    const user = await this.userRepository.findOne({
+      where: { email },
     });
-    if (!user) {
-      return { message: 'User not found' };
+
+    if (
+      !user ||
+      !(await this.comparePassword(createSignUpDto.password, user.password))
+    ) {
+      return { message: 'Incorrect email or password' };
     }
     const payload = { uuid: user.uuid };
     const token = this.jwtService.sign(payload);
+
     return {
       message: 'User logged in successfully',
       id: user.uuid,
       token,
     };
-    */
   }
 
   getUsers(): Promise<User[]> {
@@ -55,5 +58,9 @@ export class UserService {
   async getHashedPassword(password: string) {
     const hash = await bcrypt.hash(password, 12);
     return hash;
+  }
+
+  async comparePassword(password: string, hashedPassword: string) {
+    return await bcrypt.compare(password, hashedPassword);
   }
 }
