@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { signUpDto } from './dto/signup-dto';
+import { signUpDto } from './dto/signUp-dto';
 import { User } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login-dto';
+import { updateDto } from './dto/updateUser-dto';
 
 @Injectable()
 export class UserService {
@@ -63,6 +64,11 @@ export class UserService {
       where: { uuid: user_uuid },
       select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
     });
+  }
+
+  async updateUser(user_uuid: string, updateUserDto: updateDto) {
+    await this.userRepository.update({ uuid: user_uuid }, updateUserDto);
+    return { message: 'User updated successfully' };
   }
 
   async getHashedPassword(password: string) {
