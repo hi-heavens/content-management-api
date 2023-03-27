@@ -5,6 +5,7 @@ import { signUpDto } from './dto/signup-dto';
 import { User } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { loginDto } from './dto/login-dto';
 
 @Injectable()
 export class UserService {
@@ -26,6 +27,25 @@ export class UserService {
       id: newUser.uuid,
       token,
     };
+  }
+
+  loginUser(createSignUpDto: loginDto) {
+    return createSignUpDto;
+    /**
+    const user = this.userRepository.findOne({
+      where: { email: createSignUpDto.email },
+    });
+    if (!user) {
+      return { message: 'User not found' };
+    }
+    const payload = { uuid: user.uuid };
+    const token = this.jwtService.sign(payload);
+    return {
+      message: 'User logged in successfully',
+      id: user.uuid,
+      token,
+    };
+    */
   }
 
   getUsers(): Promise<User[]> {

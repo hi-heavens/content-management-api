@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { loginDto } from './dto/login-dto';
 import { signUpDto } from './dto/signup-dto';
 import { UserService } from './user.service';
 
@@ -9,6 +10,11 @@ export class UserController {
   @Post('signup')
   async signup(@Body() createSignUpDto: signUpDto) {
     return await this.userService.createUser(createSignUpDto);
+  }
+
+  @Post('login')
+  login(@Body() createSignUpDto: loginDto) {
+    return this.userService.loginUser(createSignUpDto);
   }
 
   @Get('users')
