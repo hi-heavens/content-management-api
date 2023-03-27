@@ -1,19 +1,23 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
-  @Column()
+  @Column({ nullable: false })
   first_name: string;
 
-  @Column()
+  @Column({ nullable: false })
   last_name: string;
 
-  @Column()
+  @Column({ nullable: false, unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: false })
   password: string;
+
+  @Column({ default: () => `'${uuidv4()}'`, unique: true })
+  uuid: string;
 }
