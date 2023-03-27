@@ -58,6 +58,13 @@ export class UserService {
     });
   }
 
+  getAUser(user_uuid: string): Promise<User> {
+    return this.userRepository.findOne({
+      where: { uuid: user_uuid },
+      select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
+    });
+  }
+
   async getHashedPassword(password: string) {
     const hash = await bcrypt.hash(password, 12);
     return hash;
