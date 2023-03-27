@@ -52,7 +52,10 @@ export class UserService {
   }
 
   getUsers(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
+      order: { id: 'ASC' },
+    });
   }
 
   async getHashedPassword(password: string) {

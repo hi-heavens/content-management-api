@@ -17,7 +17,7 @@ export class UserController {
     return await this.userService.loginUser(createSignUpDto);
   }
 
-  @Get('users')
+  @Get('all')
   getUsers() {
     return this.userService.getUsers();
   }
