@@ -5,6 +5,7 @@ import { signUpDto } from './dto/signup-dto';
 import { User } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { loginDto } from './dto/login-dto';
 
 @Injectable()
 export class UserService {
@@ -28,6 +29,28 @@ export class UserService {
     };
   }
 
+  async loginUser(createSignUpDto: loginDto) {
+    const email = createSignUpDto.email;
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
+
+    if (
+      !user ||
+      !(await this.comparePassword(createSignUpDto.password, user.password))
+    ) {
+      return { message: 'Incorrect email or password' };
+    }
+    const payload = { uuid: user.uuid };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      message: 'User logged in successfully',
+      id: user.uuid,
+      token,
+    };
+  }
+
   getUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
@@ -35,5 +58,9 @@ export class UserService {
   async getHashedPassword(password: string) {
     const hash = await bcrypt.hash(password, 12);
     return hash;
+  }
+
+  async comparePassword(password: string, hashedPassword: string) {
+    return await bcrypt.compare(password, hashedPassword);
   }
 }
