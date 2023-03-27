@@ -53,7 +53,8 @@ export class UserService {
 
   getUsers(): Promise<User[]> {
     return this.userRepository.find({
-      select: ['uuid', 'first_name', 'last_name', 'email'],
+      select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
+      order: { id: 'ASC' },
     });
   }
 
