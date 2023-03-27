@@ -23,7 +23,7 @@ export class UserService {
     const token = this.jwtService.sign(payload);
     return {
       message: 'User created successfully',
-      user: newUser.uuid,
+      id: newUser.uuid,
       token,
     };
   }
