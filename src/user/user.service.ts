@@ -7,14 +7,17 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login-dto';
 import { updateDto } from './dto/updateUser-dto';
+import { Post } from 'src/post/entity/post.entity';
 
 @Injectable()
 export class UserService {
-  createSignUpDto: any;
+  //   createSignUpDto: any;
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private jwtService: JwtService,
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>,
   ) {}
 
   async createUser(createSignUpDto: signUpDto) {

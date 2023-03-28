@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Post } from 'src/post/entity/post.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
@@ -20,4 +21,7 @@ export class User {
 
   @Column({ default: () => `'${uuidv4()}'`, unique: true })
   uuid: string;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }
