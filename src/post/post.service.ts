@@ -34,6 +34,15 @@ export class PostService {
     });
   }
 
+  async updatePost(postId: string, createPostDto: CreatePostDto) {
+    const { title, content } = createPostDto;
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    post.title = title;
+    post.content = content;
+    await this.postRepository.save(post);
+    return { message: 'Post updated successfully!' };
+  }
+
   async deletePost(postId: string) {
     await this.postRepository.delete({ id: postId });
     return { message: 'Post deleted successfully!' };

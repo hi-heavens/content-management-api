@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
+import { Put } from '@nestjs/common/decorators';
 import { CreatePostDto } from './dto/post-dto';
 import { PostService } from './post.service';
 
@@ -22,6 +23,14 @@ export class PostController {
   @Get('all')
   getPosts() {
     return this.postService.getPosts();
+  }
+
+  @Put(':postId')
+  updatePost(
+    @Param('postId', ParseIntPipe) postId: string,
+    @Body() createPostDto: CreatePostDto,
+  ) {
+    return this.postService.updatePost(postId, createPostDto);
   }
 
   @Delete(':postId')
