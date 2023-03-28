@@ -1,3 +1,4 @@
+import { Post } from 'src/post/entity/post.entity';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,4 +21,6 @@ export class User {
 
   @Column({ default: () => `'${uuidv4()}'`, unique: true })
   uuid: string;
+
+  post: Post[];
 }

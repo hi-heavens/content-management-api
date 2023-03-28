@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { signUpDto } from './dto/signUp-dto';
 import { User } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
@@ -10,7 +10,7 @@ import { updateDto } from './dto/updateUser-dto';
 
 @Injectable()
 export class UserService {
-  createSignUpDto: any;
+  //   createSignUpDto: any;
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
