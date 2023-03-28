@@ -27,4 +27,9 @@ export class PostService {
     const post = await this.postRepository.save(newPost);
     return { message: 'Post created successfully!', content, id: post.id };
   }
+
+  async deletePost(postId: string) {
+    await this.postRepository.delete({ id: postId });
+    return { message: 'Post deleted successfully!' };
+  }
 }
