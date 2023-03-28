@@ -28,6 +28,12 @@ export class PostService {
     return { message: 'Post created successfully!', content, id: post.id };
   }
 
+  async getPosts() {
+    return await this.postRepository.find({
+      order: { id: 'ASC' },
+    });
+  }
+
   async deletePost(postId: string) {
     await this.postRepository.delete({ id: postId });
     return { message: 'Post deleted successfully!' };
