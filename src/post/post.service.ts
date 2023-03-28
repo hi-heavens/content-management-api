@@ -24,7 +24,7 @@ export class PostService {
       select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
     });
 
-    await this.postRepository.save(newPost);
-    return { message: 'Post created successfully!', content };
+    const post = await this.postRepository.save(newPost);
+    return { message: 'Post created successfully!', content, id: post.id };
   }
 }
