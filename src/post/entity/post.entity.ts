@@ -1,6 +1,11 @@
-import { ParseUUIDPipe } from '@nestjs/common';
 import { User } from 'src/user/entity/user.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Post {
@@ -11,11 +16,12 @@ export class Post {
   title: string;
 
   @Column({ nullable: false })
-  @Column({ nullable: false })
   content: string;
 
-  @Column({ nullable: false })
-  userId: ParseUUIDPipe;
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
-  user?: User;
+  @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ referencedColumnName: 'uuid' })
+  user: User;
 }

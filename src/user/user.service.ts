@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { signUpDto } from './dto/signUp-dto';
 import { User } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login-dto';
 import { updateDto } from './dto/updateUser-dto';
+import { Post } from 'src/post/entity/post.entity';
 
 @Injectable()
 export class UserService {
@@ -15,6 +16,8 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private jwtService: JwtService,
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>,
   ) {}
 
   async createUser(createSignUpDto: signUpDto) {

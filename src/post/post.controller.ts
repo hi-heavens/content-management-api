@@ -1,4 +1,5 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CreatePostDto } from './dto/post-dto';
 import { PostService } from './post.service';
 
 @Controller('/api/v1/posts/')
@@ -6,8 +7,7 @@ export class PostController {
   constructor(private postService: PostService) {}
 
   @Post('create')
-  createPost() {
-    return this.postService.createPost();
-    // return 'This is the create post endpoint v1';
+  createPost(@Body() createPostDto: CreatePostDto) {
+    return this.postService.createPost(createPostDto);
   }
 }

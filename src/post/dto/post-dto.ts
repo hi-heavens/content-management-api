@@ -1,4 +1,3 @@
-import { ParseUUIDPipe } from '@nestjs/common';
 import { IsString } from 'class-validator';
 
 export class CreatePostDto {
@@ -8,5 +7,6 @@ export class CreatePostDto {
   @IsString()
   content: string;
 
-  userId: ParseUUIDPipe;
+  @IsString()
+  userId: string;
 }

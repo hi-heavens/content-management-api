@@ -6,6 +6,7 @@ import { CategoryModule } from './category/category.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entity/user.entity';
+import { Post } from './post/entity/post.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { User } from './user/entity/user.entity';
       username: 'root',
       password: 'Urpapa@12',
       database: 'contentmanagement',
-      entities: [User],
+      entities: [User, Post],
       synchronize: true,
     }),
   ],
