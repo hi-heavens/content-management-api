@@ -14,15 +14,21 @@ export class PostService {
     private userRepository: Repository<User>,
   ) {}
 
-  async createPost(createPostDto: CreatePostDto) {
-    const { title, content, userId } = createPostDto;
+  async createPost(createPostDto: CreatePostDto, request) {
+    const { title, content } = createPostDto;
+    const user = request.user;
+
+    const newUser = await this.userRepository.findOne({
+      where: { uuid: user.uuid },
+      select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
+    });
+    if (!newUser) {
+      return { message: 'User not found!' };
+    }
     const newPost = new Post();
     newPost.title = title;
     newPost.content = content;
-    newPost.user = await this.userRepository.findOne({
-      where: { uuid: userId },
-      select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
-    });
+    newPost.user = newUser;
 
     const post = await this.postRepository.save(newPost);
     return { message: 'Post created successfully!', content, id: post.id };
