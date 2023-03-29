@@ -7,7 +7,7 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { Put, UseGuards } from '@nestjs/common/decorators';
+import { Put, Req, UseGuards } from '@nestjs/common/decorators';
 import { CreatePostDto } from './dto/post-dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { PostService } from './post.service';
@@ -18,8 +18,8 @@ export class PostController {
 
   @UseGuards(JwtAuthGuard)
   @Post('create')
-  createPost(@Body() createPostDto: CreatePostDto) {
-    return this.postService.createPost(createPostDto);
+  createPost(@Body() createPostDto: CreatePostDto, @Req() request) {
+    return this.postService.createPost(createPostDto, request);
   }
 
   @Get('all')
@@ -38,7 +38,7 @@ export class PostController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':postId')
-  deletePost(@Param('postId', ParseIntPipe) postId: string) {
-    return this.postService.deletePost(postId);
+  deletePost(@Param('postId', ParseIntPipe) postId: string, @Req() request) {
+    return this.postService.deletePost(postId, request);
   }
 }

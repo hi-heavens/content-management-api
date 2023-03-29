@@ -43,8 +43,20 @@ export class PostService {
     return { message: 'Post updated successfully!' };
   }
 
-  async deletePost(postId: string) {
-    await this.postRepository.delete({ id: postId });
+  async deletePost(postId: string, request) {
+    const user = request.user;
+
+    const post = await this.postRepository
+      .createQueryBuilder()
+      .delete()
+      .from(Post)
+      .where('id = :id AND user = :userId', { id: postId, userId: user.uuid })
+      .execute();
+
+    if (post.affected === 0) {
+      return { message: 'Post not found for the user!' };
+    }
+
     return { message: 'Post deleted successfully!' };
   }
 }
