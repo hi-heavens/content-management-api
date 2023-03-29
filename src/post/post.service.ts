@@ -14,15 +14,21 @@ export class PostService {
     private userRepository: Repository<User>,
   ) {}
 
-  async createPost(createPostDto: CreatePostDto) {
-    const { title, content, userId } = createPostDto;
+  async createPost(createPostDto: CreatePostDto, request) {
+    const { title, content } = createPostDto;
+    const user = request.user;
+
+    const newUser = await this.userRepository.findOne({
+      where: { uuid: user.uuid },
+      select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
+    });
+    if (!newUser) {
+      return { message: 'User not found!' };
+    }
     const newPost = new Post();
     newPost.title = title;
     newPost.content = content;
-    newPost.user = await this.userRepository.findOne({
-      where: { uuid: userId },
-      select: ['id', 'uuid', 'first_name', 'last_name', 'email'],
-    });
+    newPost.user = newUser;
 
     const post = await this.postRepository.save(newPost);
     return { message: 'Post created successfully!', content, id: post.id };
@@ -34,17 +40,38 @@ export class PostService {
     });
   }
 
-  async updatePost(postId: string, createPostDto: CreatePostDto) {
+  async updatePost(postId: string, createPostDto: CreatePostDto, request) {
     const { title, content } = createPostDto;
-    const post = await this.postRepository.findOne({ where: { id: postId } });
-    post.title = title;
-    post.content = content;
-    await this.postRepository.save(post);
+    const user = request.user;
+
+    const post = await this.postRepository
+      .createQueryBuilder()
+      .update(Post)
+      .set({ title, content })
+      .where('id = :id AND user = :userId', { id: postId, userId: user.uuid })
+      .execute();
+
+    if (post.affected === 0) {
+      return { message: 'Post not found for the user!' };
+    }
+
     return { message: 'Post updated successfully!' };
   }
 
-  async deletePost(postId: string) {
-    await this.postRepository.delete({ id: postId });
+  async deletePost(postId: string, request) {
+    const user = request.user;
+
+    const post = await this.postRepository
+      .createQueryBuilder()
+      .delete()
+      .from(Post)
+      .where('id = :id AND user = :userId', { id: postId, userId: user.uuid })
+      .execute();
+
+    if (post.affected === 0) {
+      return { message: 'Post not found for the user!' };
+    }
+
     return { message: 'Post deleted successfully!' };
   }
 }
