@@ -48,6 +48,13 @@ This endpoint will handle the forgot and reset password feature. The following s
 This endpoint will handle the CRUD methods for categories. The initial data for these endpoints must be added to the DB via seeders.
 
 
+### Update the .env file
+To test, you will have to connect to a MySQL DB. Create a `.env` file with the below details:
+- DB_HOST=your_db_hostname
+- DB_PORT=3306
+- DB_USERNAME=your_db_username
+- DB_PASSWORD=your_db_password
+- DB_DATABASE=contentmanagement
 
 
 ### Contributor
