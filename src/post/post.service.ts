@@ -40,12 +40,21 @@ export class PostService {
     });
   }
 
-  async updatePost(postId: string, createPostDto: CreatePostDto) {
+  async updatePost(postId: string, createPostDto: CreatePostDto, request) {
     const { title, content } = createPostDto;
-    const post = await this.postRepository.findOne({ where: { id: postId } });
-    post.title = title;
-    post.content = content;
-    await this.postRepository.save(post);
+    const user = request.user;
+
+    const post = await this.postRepository
+      .createQueryBuilder()
+      .update(Post)
+      .set({ title, content })
+      .where('id = :id AND user = :userId', { id: postId, userId: user.uuid })
+      .execute();
+
+    if (post.affected === 0) {
+      return { message: 'Post not found for the user!' };
+    }
+
     return { message: 'Post updated successfully!' };
   }
 

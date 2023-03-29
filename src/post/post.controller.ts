@@ -30,10 +30,11 @@ export class PostController {
   @UseGuards(JwtAuthGuard)
   @Put(':postId')
   updatePost(
-    @Param('postId', ParseIntPipe) postId: string,
     @Body() createPostDto: CreatePostDto,
+    @Param('postId', ParseIntPipe) postId: string,
+    @Req() request,
   ) {
-    return this.postService.updatePost(postId, createPostDto);
+    return this.postService.updatePost(postId, createPostDto, request);
   }
 
   @UseGuards(JwtAuthGuard)
