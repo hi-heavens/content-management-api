@@ -15,7 +15,7 @@ import { Post } from '../post/entity/post.entity';
     TypeOrmModule.forFeature([Post]),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '600s' },
     }),
   ],
   exports: [UserModule],
