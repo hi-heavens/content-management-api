@@ -46,3 +46,9 @@ This endpoint will handle the forgot and reset password feature. The following s
 
 ## Categories Endpoint (CRUD)
 This endpoint will handle the CRUD methods for categories. The initial data for these endpoints must be added to the DB via seeders.
+
+
+
+
+### Contributor
+- Kehinde Adedokun
