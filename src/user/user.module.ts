@@ -18,6 +18,6 @@ import { Post } from '../post/entity/post.entity';
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  exports: [UserModule],
+  exports: [UserModule, UserService],
 })
 export class UserModule {}

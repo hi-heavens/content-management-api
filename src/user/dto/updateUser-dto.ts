@@ -6,4 +6,7 @@ export class updateDto {
 
   @IsString()
   readonly last_name?: string;
+
+  @IsString()
+  password?: string;
 }
