@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
@@ -14,14 +14,19 @@ export class AuthService {
   ) {}
 
   async forgotPassword(forgotPasswordDto: forgotPasswordDto) {
-    const token = await this.generateToken(forgotPasswordDto.email);
-    return { message: 'Password reset token sent successfully', token };
+    const resetToken = await this.generateToken(forgotPasswordDto.email);
+    return {
+      message: 'Password reset token sent successfully',
+      token: resetToken,
+    };
   }
 
   async generateToken(email: string): Promise<string> {
     const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new NotFoundException('There is no user with this email');
+    }
     const payload = { user: user.uuid };
     return this.jwtService.sign(payload);
-    // return 'This is the generate token route service';
   }
 }
