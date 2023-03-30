@@ -11,7 +11,6 @@ import { Post } from 'src/post/entity/post.entity';
 
 @Injectable()
 export class UserService {
-  //   createSignUpDto: any;
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -81,5 +80,11 @@ export class UserService {
 
   async comparePassword(password: string, hashedPassword: string) {
     return await bcrypt.compare(password, hashedPassword);
+  }
+
+  async findUserByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({
+      where: { email },
+    });
   }
 }
