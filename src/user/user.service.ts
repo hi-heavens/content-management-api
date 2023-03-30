@@ -22,6 +22,13 @@ export class UserService {
   async createUser(createSignUpDto: signUpDto) {
     const hashPassword = await this.getHashedPassword(createSignUpDto.password);
     createSignUpDto.password = hashPassword;
+    const email = createSignUpDto.email;
+    const existUser = await this.userRepository.findOne({
+      where: { email },
+    });
+    if (existUser) {
+      return { message: 'User already exists' };
+    }
     const newUser = await this.userRepository.save(createSignUpDto);
     const payload = { uuid: newUser.uuid };
     const token = this.jwtService.sign(payload);

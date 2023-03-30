@@ -17,13 +17,12 @@ import { AuthModule } from './auth/auth.module';
     CategoryModule,
     UserModule,
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DB_HOST,
-      port: 3306,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      type: 'postgres',
+      url: 'postgres://content_management_user:ULXZdoyyLt6Ei5Scicq0SotVLaLm0iUy@dpg-cgi3nbg2qv2772he7p4g-a.oregon-postgres.render.com/content_management',
       entities: [User, Post],
+      ssl: {
+        rejectUnauthorized: false,
+      },
       synchronize: true,
     }),
     AuthModule,
