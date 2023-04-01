@@ -77,10 +77,14 @@ export class UserService {
 
   async updateUser(user_uuid: string, updateUserDto: updateDto) {
     const { first_name, last_name } = updateUserDto;
-    await this.userRepository.update(
+
+    const updateUser = await this.userRepository.update(
       { uuid: user_uuid },
       { first_name, last_name },
     );
+    if (updateUser.affected === 0) {
+      return { message: 'User not found!' };
+    }
     return { message: 'User updated successfully' };
   }
 
