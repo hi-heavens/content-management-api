@@ -76,7 +76,11 @@ export class UserService {
   }
 
   async updateUser(user_uuid: string, updateUserDto: updateDto) {
-    await this.userRepository.update({ uuid: user_uuid }, updateUserDto);
+    const { first_name, last_name } = updateUserDto;
+    await this.userRepository.update(
+      { uuid: user_uuid },
+      { first_name, last_name },
+    );
     return { message: 'User updated successfully' };
   }
 
