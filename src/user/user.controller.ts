@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { loginDto } from './dto/login-dto';
-import { signUpDto } from './dto/signUp-dto';
+import { signUpDto } from './dto/signup-dto';
 import { updateDto } from './dto/updateUser-dto';
 import { UserService } from './user.service';
 
