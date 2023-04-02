@@ -1,6 +1,10 @@
 # Content Management REST API
 This is a REST API for a content management system that provides functionality to manage posts, categories, and users. This project is a working reference point
 
+---
+## Base URL
+- https://content-management-api-production.up.railway.app/
+---
 ## API Prefix
 The API routing prefix is /api/v1/.
 
