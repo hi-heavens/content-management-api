@@ -45,11 +45,9 @@ export class AuthService {
     const hashPassword = await this.userService.getHashedPassword(
       newPassword.password,
     );
-
     // update the user's password with the hashed password
-    await this.userService.updateUser(user.uuid, {
-      password: hashPassword,
-    });
+    user.password = hashPassword;
+    await this.userRepository.save(user);
     return { message: 'Password reset successfully' };
   }
 
