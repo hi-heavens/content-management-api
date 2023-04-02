@@ -24,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
       ssl: {
         rejectUnauthorized: false,
       },
-      // synchronize: true,
+      synchronize: true,
     }),
     /*TypeOrmModule.forRoot({
       type: 'mysql',
