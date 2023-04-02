@@ -16,7 +16,6 @@ import { AuthModule } from './auth/auth.module';
     PostModule,
     CategoryModule,
     UserModule,
-    /*
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: 'postgres://content_management_user:ULXZdoyyLt6Ei5Scicq0SotVLaLm0iUy@dpg-cgi3nbg2qv2772he7p4g-a.oregon-postgres.render.com/content_management',
@@ -25,9 +24,9 @@ import { AuthModule } from './auth/auth.module';
       ssl: {
         rejectUnauthorized: false,
       },
-      synchronize: true,
-    }),*/
-    TypeOrmModule.forRoot({
+      // synchronize: true,
+    }),
+    /*TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
       port: 3306,
@@ -36,7 +35,7 @@ import { AuthModule } from './auth/auth.module';
       database: process.env.DB_DATABASE,
       entities: [User, Post],
       synchronize: true,
-    }),
+    }),*/
     AuthModule,
   ],
   controllers: [AppController],
