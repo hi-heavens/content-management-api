@@ -10,8 +10,8 @@ export const dataSourceOptions: DataSourceOptions = {
   ssl: {
     rejectUnauthorized: false,
   },
-  // Uncomment the following line to connect to a local database.
   // synchronize: true,
+  // Uncomment the following line to connect to a local database.
   /*type: 'mysql',
   host: process.env.DB_HOST,
   port: 3306,
