@@ -9,6 +9,7 @@ import { User } from './user/entity/user.entity';
 import { Post } from './post/entity/post.entity';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { dataSourceOptions } from 'db/data-source';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { AuthModule } from './auth/auth.module';
     PostModule,
     CategoryModule,
     UserModule,
-    TypeOrmModule.forRoot({
+    // To connect to a remote database, uncomment the following line and comment out the below line.
+    /*TypeOrmModule.forRoot({
       type: 'postgres',
       url: 'postgres://content_management_user:ULXZdoyyLt6Ei5Scicq0SotVLaLm0iUy@dpg-cgi3nbg2qv2772he7p4g-a.oregon-postgres.render.com/content_management',
       entities: [User, Post],
@@ -25,7 +27,8 @@ import { AuthModule } from './auth/auth.module';
         rejectUnauthorized: false,
       },
       synchronize: true,
-    }),
+    }),*/
+    // To connect to a local database, uncomment the following line and comment out the above line.
     /*TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -36,6 +39,7 @@ import { AuthModule } from './auth/auth.module';
       entities: [User, Post],
       synchronize: true,
     }),*/
+    TypeOrmModule.forRoot(dataSourceOptions),
     AuthModule,
   ],
   controllers: [AppController],
