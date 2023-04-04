@@ -5,8 +5,6 @@ import { PostModule } from './post/post.module';
 import { CategoryModule } from './category/category.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/entity/user.entity';
-import { Post } from './post/entity/post.entity';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { dataSourceOptions } from 'db/data-source';
